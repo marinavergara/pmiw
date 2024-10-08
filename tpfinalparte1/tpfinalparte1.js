@@ -1,3 +1,4 @@
+//Carta a una señorita en Paris
 //Marina Vergara, Iara Sepúlveda. Comisión 1
 
 let imagenes = []; 
