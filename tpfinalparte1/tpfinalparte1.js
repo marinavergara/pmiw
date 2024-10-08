@@ -1,3 +1,5 @@
+//Marina Vergara, Iara Sepúlveda. Comisión 1
+
 let imagenes = []; 
 
 let estado = 0; 
