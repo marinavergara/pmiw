@@ -11,6 +11,7 @@ let escrito = [
   "Sigue vomitando aún más conejitos y el caos crece en el departamento.",
   "El narrador se siente atrapado e incapaz de controlar la situación.",
   "Agotado y sin salida, el narrador es abrumado por el caos de los conejitos. Desesperado toma una decisión trágica.",
+  "Juego",
   "La dosis de pastillas no fue la correcta para terminar con su vida.",
   "Luego de la masacre, el departamento está en un silencioso caos.",
   "La culpa lo carcome tanto que se siente perseguido por las almas de los conejos.",
@@ -20,7 +21,7 @@ let escrito = [
 ];
 
 function preload() {
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < 17; i++) {
     imagenes[i] = loadImage("data/imagen" + i + ".jpeg");
   }
 }
@@ -58,18 +59,35 @@ function draw() {
       dibujaBoton("Trata de Ocultarlo", width / 2 - 100, height * 0.75, 165, 50);
       dibujaBoton("Se lo cuenta a Sara", width / 2 + 100, height * 0.75, 165, 50);
     } else if (estado === 5) {
-      dibujaBoton("Lo meten preso", width / 2, height * 0.75, 100, 50);
+      dibujaBoton("Lo meten preso", width / 2, height * 0.75, 120, 50);
     } else if (estado === 6) {
-      dibujaBoton("Acepta la situación y se los queda", width / 2 + 150, height * 0.75, 275, 50);
+      dibujaBoton("Acepta la situación y se los queda", width / 2 + 150, height * 0.85, 275, 50);
       dibujaBoton("Se deshace de los conejos", width / 2 - 150, height * 0.85, 260, 50);
     } else if (estado === 7) {
       dibujaBoton("Continúa soportando la invasión", width / 2, height * 0.75, 270, 50);
     } else if (estado === 8) {
-      dibujaBoton("Pide ayuda", width / 2 - 150, height * 0.75, 100, 50);
-      dibujaBoton("Se suicida", width / 2, height * 0.75, 100, 50);
-      dibujaBoton("Mata a todos los conejos", width / 2 + 150, height * 0.75, 260, 50);
-    }
+      dibujaBoton("Pide ayuda", width / 2 - 200, height * 0.75, 100, 50);
+      dibujaBoton("Se suicida", width / 2 -50 , height * 0.75, 100, 50);
+      dibujaBoton("Mata a todos los conejos", width / 2 + 150, height * 0.75, 200, 50);
+    }else if (estado === 9){
+      dibujaBoton("Toma pastillas",  width / 2 + 150, height * 0.75, 110, 50);
+      dibujaBoton("Se tira del balcón",  width / 2 - 150, height * 0.75, 130, 50);
+    }else if (estado === 10 || estado === 11 || estado === 14){
+      dibujaBoton("Inicio", width /2, height * 0.75, 100,50);
+    }else if (estado === 12){
+      dibujaBoton("Se siente Aliviado",width / 2 + 150, height * 0.85, 220, 50);
+      dibujaBoton("Se siente Culpable",width / 2 - 150, height * 0.85, 220, 50);
+  }else if (estado===13){
+    dibujaBoton("Continúa con la angustia", width / 2 - 150, height * 0.75, 260, 50);
+    dibujaBoton("Pide ayuda", width / 2 + 150, height * 0.75, 100, 50);
+  }else if (estado ===15){
+    dibujaBoton("No le cree y lo denuncia", width / 2 + 150, height * 0.75, 230, 50);
+    dibujaBoton("Lo ayuda", width / 2 - 150, height * 0.75, 100, 50);
+  }else if (estado ===16){
+    dibujaBoton("Lo internan",width / 2 + 150, height * 0.75, 110, 50);
+    dibujaBoton("Se escapa", width / 2 -150, height * 0.75, 110, 50);
   }
+}
 }
 
 function cargarImagenes(imag, x, y, ancho, alto, alinea) {
@@ -127,24 +145,59 @@ function mousePressed() {
       estado = 5;
     }
   } else if (estado === 5) {
-    if (botonSobreMouse(width / 2, height * 0.75, 100, 50)) { //boton "lo meten preso"
+    if (botonSobreMouse(width / 2, height * 0.75, 120, 50)) { //boton "lo meten preso"
       estado = 0;
     }
   } else if (estado === 6) {
-    if (botonSobreMouse(width / 2 + 150, height * 0.75, 275, 50)) { // boton acepta la situación""
+    if (botonSobreMouse(width / 2 + 150, height * 0.85, 275, 50)) { // boton acepta la situación""
       estado = 7;
+    }else if (botonSobreMouse (width / 2 - 150, height * 0.85, 260, 50)){ //boton "se deshace de los conejos"
+    estado = 8;
     }
   } else if (estado === 7) {
-    if (botonSobreMouse(width / 2 -150, height * 0.75, 260, 50)) { //boton "se deshace de los conejos"
+    if (botonSobreMouse(width / 2, height * 0.75, 270, 50)) { //boton "continua soportando la invasión"
       estado = 8;
     }
   } else if (estado === 8) {
-    if (botonSobreMouse(width / 2 - 150, height * 0.75, 100, 50)) { // boton "pide ayuda"
-      estado = 14;
-    } else if (botonSobreMouse(width / 2, height * 0.75, 100, 50)) { // boton " se suicida"
+    if (botonSobreMouse(width / 2 - 200, height * 0.75, 100, 50)) { // boton "pide ayuda"
+      estado = 15;
+    } else if (botonSobreMouse(width / 2 -50, height * 0.75, 100, 50)) { // boton " se suicida"
       estado = 9;
-    } else if (botonSobreMouse(width / 2 + 150, height * 0.75, 260, 50)) { // boton " mata a todos los conejos"
-      estado = 11;
+    } else if (botonSobreMouse(width / 2 + 100, height * 0.75, 200, 50)) { // boton " mata a todos los conejos"
+      estado = 12;
+    }
+  }else if (estado === 9){
+    if (botonSobreMouse ( width / 2 + 150, height * 0.75, 110, 50)){ //boton "toma pastillas"
+      estado=11;
+    }else if (botonSobreMouse(width / 2 - 150, height * 0.75, 130, 50)){ // boton "se tira del balcon"
+      estado = 10;
+    }
+  }else if (estado === 10 || estado === 11 || estado === 14) {
+    if (botonSobreMouse(width / 2, height * 0.75, 100, 50)) { //boton "inicio"
+        estado = 0;
+  }
+  }else if (estado === 12){
+    if (botonSobreMouse(width / 2 + 150, height * 0.85, 220, 50)){
+      estado = 0;
+    }else if (botonSobreMouse(width / 2 - 150, height * 0.85, 220, 50)){
+      estado =13;
+    }
+  }else if (estado ===13){
+    if (botonSobreMouse(width / 2 - 150, height * 0.75, 260, 50)){
+      estado = 14;
+    }else if (botonSobreMouse( width / 2 + 150, height * 0.75, 100, 50)){
+      estado = 15;
+    }
+  }else if (estado === 15){
+    if (botonSobreMouse (width / 2 + 150, height * 0.75, 230, 50)){
+      estado= 5;
+    }else if (botonSobreMouse(width / 2 - 150, height * 0.75, 100, 50)){
+      estado = 16;
+    }
+  }else if (estado ===16){
+    if (botonSobreMouse(width / 2 + 150, height * 0.75, 110, 50)){
+      estado =10;
+    }else if (botonSobreMouse(width / 2 -150, height * 0.75, 110, 50)){
     }
   }
-} 
+}
