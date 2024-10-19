@@ -1,11 +1,15 @@
 let imagenes = [];
+let sonido;
+let sonidoMusica;
+let sonidoClick;
+let sonidoEmpieza = false;
 let estado = 0;
 let escrito = [
   "Carta a Una señorita en Paris.",
-  "Creditos.",
+  "Autor del cuento; Julio Cortázar en el año 1951 \n Marina Vergara:120383/9 y Iara Sepúlveda: 120372/5.",
   "El narrador escribe una carta a Andrée, desde su departamento en Buenos Aires.",
   "Confiesa que tiene un problema insólito.",
-  "Describe la primera vez que vomito un conejo de forma inesperada y decide entonces.",
+  "Describe la primera vez que vomitó un conejo de forma inesperada y decide entonces:",
   "Sara, asustada y convencida de que el hombre está loco, llama a la policía.",
   "Decide ocultar el hecho, pero le preocupa cómo manejar la situación.",
   "Sigue vomitando aún más conejitos y el caos crece en el departamento.",
@@ -21,6 +25,9 @@ let escrito = [
 ];
 
 function preload() {
+  //funcion para la musica
+  sonidoMusica = loadSound("data/musica.mp3");
+  sonidoClick = loadSound("data/click.mp3");
   for (let i = 0; i < 17; i++) {
     imagenes[i] = loadImage("data/imagen" + i + ".jpeg");
   }
@@ -41,10 +48,16 @@ function draw() {
   if (estado >= 0 && estado < imagenes.length) {
     let img = imagenes[estado];
     let x = width / 2; //centro del canvas en x
-    let y = height / 2; //centro del canvas en y 
+    let y = height / 2; //centro del canvas en y
 
     cargarImagenes(img, x, y, img.width, img.height, CENTER);
-    text(escrito[estado], 120, 240, 400);
+
+    //rectangulo atras del texxto
+    fill(240, 180);
+    rect(120, 240, 400, 60, 05);
+
+    fill (0);
+    text(escrito[estado], 120, 245, 400);
 
     // Se dibujan los botones
     if (estado === 0 || estado === 1) {
@@ -67,27 +80,27 @@ function draw() {
       dibujaBoton("Continúa soportando la invasión", width / 2, height * 0.75, 270, 50);
     } else if (estado === 8) {
       dibujaBoton("Pide ayuda", width / 2 - 200, height * 0.75, 100, 50);
-      dibujaBoton("Se suicida", width / 2 -50 , height * 0.75, 100, 50);
+      dibujaBoton("Se suicida", width / 2 -50, height * 0.75, 100, 50);
       dibujaBoton("Mata a todos los conejos", width / 2 + 150, height * 0.75, 200, 50);
-    }else if (estado === 9){
-      dibujaBoton("Toma pastillas",  width / 2 + 150, height * 0.75, 110, 50);
-      dibujaBoton("Se tira del balcón",  width / 2 - 150, height * 0.75, 130, 50);
-    }else if (estado === 10 || estado === 11 || estado === 14){
-      dibujaBoton("Inicio", width /2, height * 0.75, 100,50);
-    }else if (estado === 12){
-      dibujaBoton("Se siente Aliviado",width / 2 + 150, height * 0.85, 220, 50);
-      dibujaBoton("Se siente Culpable",width / 2 - 150, height * 0.85, 220, 50);
-  }else if (estado===13){
-    dibujaBoton("Continúa con la angustia", width / 2 - 150, height * 0.75, 260, 50);
-    dibujaBoton("Pide ayuda", width / 2 + 150, height * 0.75, 100, 50);
-  }else if (estado ===15){
-    dibujaBoton("No le cree y lo denuncia", width / 2 + 150, height * 0.75, 230, 50);
-    dibujaBoton("Lo ayuda", width / 2 - 150, height * 0.75, 100, 50);
-  }else if (estado ===16){
-    dibujaBoton("Lo internan",width / 2 + 150, height * 0.75, 110, 50);
-    dibujaBoton("Se escapa", width / 2 -150, height * 0.75, 110, 50);
+    } else if (estado === 9) {
+      dibujaBoton("Toma pastillas", width / 2 + 150, height * 0.75, 110, 50);
+      dibujaBoton("Se tira del balcón", width / 2 - 150, height * 0.75, 130, 50);
+    } else if (estado === 10 || estado === 11 || estado === 14) {
+      dibujaBoton("Inicio", width /2, height * 0.75, 100, 50);
+    } else if (estado === 12) {
+      dibujaBoton("Se siente Aliviado", width / 2 + 150, height * 0.85, 220, 50);
+      dibujaBoton("Se siente Culpable", width / 2 - 150, height * 0.85, 220, 50);
+    } else if (estado===13) {
+      dibujaBoton("Continúa con la angustia", width / 2 - 150, height * 0.75, 260, 50);
+      dibujaBoton("Pide ayuda", width / 2 + 150, height * 0.75, 100, 50);
+    } else if (estado ===15) {
+      dibujaBoton("No le cree y lo denuncia", width / 2 + 150, height * 0.75, 230, 50);
+      dibujaBoton("Lo ayuda", width / 2 - 150, height * 0.75, 100, 50);
+    } else if (estado ===16) {
+      dibujaBoton("Lo internan", width / 2 + 150, height * 0.75, 110, 50);
+      dibujaBoton("Se escapa", width / 2 -150, height * 0.75, 110, 50);
+    }
   }
-}
 }
 
 function cargarImagenes(imag, x, y, ancho, alto, alinea) {
@@ -97,26 +110,17 @@ function cargarImagenes(imag, x, y, ancho, alto, alinea) {
   }
 }
 
-function dibujaBoton(txt, x, y, w, h) {
-  push();
-  rectMode(CENTER);
-  if (botonSobreMouse(x, y, w, h)) {
-    fill(20, 200, 0);
-  } else {
-    fill(100);
-  }
-  rect(x, y, w, h); //dibuja el botón
-  textAlign(CENTER, CENTER);
-  fill(255);
-  text(txt, x, y); // Mostrar el texto en el botón
-  pop();
-}
-
-function botonSobreMouse(x, y, w, h) {
-  return (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y - h / 2 && mouseY < y + h / 2);
-}
-
 function mousePressed() {
+  // reproduce musica
+  if (!sonidoEmpieza) {
+    sonidoMusica.loop(); // reproduce el sonido en bucle
+    sonidoEmpieza = true; // se cambia el estado a true
+  }
+
+  // reproduce click
+  sonidoClick.play();
+
+
   //Aavnzar a los estados al hacer clic en los botones
   if (estado === 0) {
     if (botonSobreMouse(width / 2 + 100, height * 0.75, 165, 50)) { // boton "creditos"
@@ -124,8 +128,8 @@ function mousePressed() {
     } else if (botonSobreMouse(width / 2 - 100, height * 0.75, 165, 50)) { // boton "comenzar"
       estado = 2;
     }
-  }else if (estado === 1) { 
-    if (botonSobreMouse(width / 2 - 100, height * 0.75, 165, 50)) { 
+  } else if (estado === 1) {
+    if (botonSobreMouse(width / 2 - 100, height * 0.75, 165, 50)) {
       estado = 0;
     }
   } else if (estado === 2) {
@@ -151,8 +155,8 @@ function mousePressed() {
   } else if (estado === 6) {
     if (botonSobreMouse(width / 2 + 150, height * 0.85, 275, 50)) { // boton acepta la situación""
       estado = 7;
-    }else if (botonSobreMouse (width / 2 - 150, height * 0.85, 260, 50)){ //boton "se deshace de los conejos"
-    estado = 8;
+    } else if (botonSobreMouse (width / 2 - 150, height * 0.85, 260, 50)) { //boton "se deshace de los conejos"
+      estado = 8;
     }
   } else if (estado === 7) {
     if (botonSobreMouse(width / 2, height * 0.75, 270, 50)) { //boton "continua soportando la invasión"
@@ -166,38 +170,39 @@ function mousePressed() {
     } else if (botonSobreMouse(width / 2 + 100, height * 0.75, 200, 50)) { // boton " mata a todos los conejos"
       estado = 12;
     }
-  }else if (estado === 9){
-    if (botonSobreMouse ( width / 2 + 150, height * 0.75, 110, 50)){ //boton "toma pastillas"
+  } else if (estado === 9) {
+    if (botonSobreMouse ( width / 2 + 150, height * 0.75, 110, 50)) { //boton "toma pastillas"
       estado=11;
-    }else if (botonSobreMouse(width / 2 - 150, height * 0.75, 130, 50)){ // boton "se tira del balcon"
+    } else if (botonSobreMouse(width / 2 - 150, height * 0.75, 130, 50)) { // boton "se tira del balcon"
       estado = 10;
     }
-  }else if (estado === 10 || estado === 11 || estado === 14) {
+  } else if (estado === 10 || estado === 11 || estado === 14) {
     if (botonSobreMouse(width / 2, height * 0.75, 100, 50)) { //boton "inicio"
-        estado = 0;
-  }
-  }else if (estado === 12){
-    if (botonSobreMouse(width / 2 + 150, height * 0.85, 220, 50)){
       estado = 0;
-    }else if (botonSobreMouse(width / 2 - 150, height * 0.85, 220, 50)){
+    }
+  } else if (estado === 12) {
+    if (botonSobreMouse(width / 2 + 150, height * 0.85, 220, 50)) { // boton " se siente aliviado"
+      estado = 0;
+    } else if (botonSobreMouse(width / 2 - 150, height * 0.85, 220, 50)) { //"culpable"
       estado =13;
     }
-  }else if (estado ===13){
-    if (botonSobreMouse(width / 2 - 150, height * 0.75, 260, 50)){
+  } else if (estado ===13) {
+    if (botonSobreMouse(width / 2 - 150, height * 0.75, 260, 50)) { //Continua con la angustia
       estado = 14;
-    }else if (botonSobreMouse( width / 2 + 150, height * 0.75, 100, 50)){
+    } else if (botonSobreMouse( width / 2 + 150, height * 0.75, 100, 50)) { //pide ayuda
       estado = 15;
     }
-  }else if (estado === 15){
-    if (botonSobreMouse (width / 2 + 150, height * 0.75, 230, 50)){
+  } else if (estado === 15) {
+    if (botonSobreMouse (width / 2 + 150, height * 0.75, 230, 50)) { //no le cree y lo denuncia
       estado= 5;
-    }else if (botonSobreMouse(width / 2 - 150, height * 0.75, 100, 50)){
+    } else if (botonSobreMouse(width / 2 - 150, height * 0.75, 100, 50)) { //lo ayuda
       estado = 16;
     }
-  }else if (estado ===16){
-    if (botonSobreMouse(width / 2 + 150, height * 0.75, 110, 50)){
+  } else if (estado ===16) {
+    if (botonSobreMouse(width / 2 + 150, height * 0.75, 110, 50)) { // lo internan
       estado =10;
-    }else if (botonSobreMouse(width / 2 -150, height * 0.75, 110, 50)){
-    }
+    } else if (botonSobreMouse(width / 2 -150, height * 0.75, 110, 50)) {  // se escapa
+    estado = 14;
   }
+}
 }
