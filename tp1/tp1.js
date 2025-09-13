@@ -1,4 +1,4 @@
-//marina vergara comision 1 legajo 120383/9
+//marina vergara comision 2 legajo 120383/9
 //youtube:https://youtu.be/ED5UOmcWy0I
 
 
@@ -57,3 +57,4 @@ function mouseDragged(){
   let Y= map(mouseY, 0, height, 0, 255);
   pintura =color(X, random(255), Y);
 }
+
