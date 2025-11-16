@@ -1,5 +1,5 @@
 //Marina Vergara 120383/9 comisión 2
-//link 
+//link https://youtu.be/7gpuKMt4dtw?si=0NsCzmJ_WZRGzylR
 
 let juego;
 let sapoImg, protagonistasImg, fondoImg, PortadaImg, ganasteImg, PerdisteImg, creditosImg, instruccionesImg, moverSonido, fondoSonido, fuentePixel;
@@ -70,3 +70,4 @@ function keyPressed() {
     }
   }
 }
+
